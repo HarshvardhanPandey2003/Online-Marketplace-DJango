@@ -1,5 +1,4 @@
 # Online-Marketplace-Django
-# E-commerce Application
 
 Welcome to the E-commerce Application! This project is a Django-based web application where users can list their products for sale and clients can browse and purchase these products. The front-end is developed using HTML and CSS.
 
