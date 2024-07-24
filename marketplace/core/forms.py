@@ -33,3 +33,7 @@ class SignupForm(UserCreationForm):
         'placeholder': 'Repeat password',
         'class': 'w-full py-4 px-6 rounded-xl'
     }))
+
+
+# Thes forms provides Django's inputs functions for Login and Signup like
+# security , chartype , strength of password and email address

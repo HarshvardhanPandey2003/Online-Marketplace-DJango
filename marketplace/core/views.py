@@ -1,18 +1,41 @@
 from django.shortcuts import render, redirect
 from item.models import Category, Item
+from django.contrib.auth import logout
+from django.shortcuts import redirect
+from django.urls import reverse
 from .forms import SignupForm
+from django.shortcuts import render, get_object_or_404
+from item.models import Category, Item
+from django.db.models import Count
+
+
 def index(request):
-    items = Item.objects.filter(is_sold=False)[0:6]
-    categories = Category.objects.all()
+    categories = Category.objects.annotate(item_count=Count('items'))
+    
+    category_id = request.GET.get('category')
+    if category_id:
+        category = get_object_or_404(Category, id=category_id)
+        items = Item.objects.filter(category=category, is_sold=False)
+    else:
+        category = None
+        items = Item.objects.filter(is_sold=False)
+
+    total_items = Item.objects.filter(is_sold=False).count()
 
     return render(request, 'core/index.html', {
-        'categories': categories,
         'items': items,
+        'categories': categories,
+        'category': category,
+        'total_items': total_items,
     })
 def contact(request):
     return render(request, 'core/contact.html')
 def about(request):
     return render(request, 'core/about.html')
+
+def logout_view(request):
+    logout(request)
+    return redirect(reverse('core:index'))
 
 def signup(request):
     if request.method == 'POST':

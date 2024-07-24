@@ -32,12 +32,13 @@
     </style>
 
     <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-        <h2 class="mb-12 text-2xl text-center">Newest items</h2>
+        <h2 class="mb-12 text-2xl text-center">
+            {% if category %}{{ category.name }}{% else %}All Items{% endif %}
+        </h2>
 
         <div class="grid grid-cols-3 gap-3">
             {% for item in items %}
                 <div class="item-card bg-white rounded-xl overflow-hidden">
-                    <!-- So here the item is app name and detail is the name of the HTML Page. -->
                     <a href="{% url 'item:detail' item.id %}">  
                         <div class="image-container">
                             <img src="{{ item.image.url }}" alt="{{ item.name }}">
@@ -49,6 +50,8 @@
                         </div>
                     </a>
                 </div>
+            {% empty %}
+                <p>No items found.</p>
             {% endfor %}
         </div>
     </div>
@@ -57,9 +60,17 @@
         <h2 class="mb-12 text-2xl text-center">Categories</h2>
 
         <div class="grid grid-cols-3 gap-3">
+            <div>
+                <a href="{% url 'core:index' %}">
+                    <div class="p-6 bg-white rounded-b-xl">
+                        <h2 class="text-2xl">All Items</h2>
+                        <p class="text-gray-500">{{ total_items }} items</p>
+                    </div>
+                </a>
+            </div>
             {% for category in categories %}
                 <div>
-                    <a href="#">
+                    <a href="{% url 'core:index' %}?category={{ category.id }}">
                         <div class="p-6 bg-white rounded-b-xl">
                             <h2 class="text-2xl">{{ category.name }}</h2>
                             <p class="text-gray-500">{{ category.items.count }} items</p>
