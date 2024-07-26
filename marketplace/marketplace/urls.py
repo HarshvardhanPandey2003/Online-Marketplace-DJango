@@ -10,7 +10,8 @@ urlpatterns = [
     path('', include('core.urls')),
     path('admin/', admin.site.urls),
     path('items/', include('item.urls')),
-    
+    path('dashboard/', include('dashboard.urls')), 
 
 ]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# Now here we determine specific paths according to the app that has been chosen 
 

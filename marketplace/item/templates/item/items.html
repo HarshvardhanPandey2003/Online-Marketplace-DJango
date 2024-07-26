@@ -1,0 +1,53 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Browse Items{% endblock %}
+
+{% block content %}
+<div class="pb-6 grid grid-cols-5 gap-4 bg-gray-100">
+    <div class="col-span-1 p-4 bg-white rounded-xl">
+        <form method="get" action="{% url 'item:items' %}">
+            <input name="query" class="w-full py-2 px-4 border rounded-xl text-sm" type="text" value="{{ query }}" placeholder="Find a bike, a chair or car...">
+            <button class="mt-2 py-2 px-4 text-sm bg-teal-500 text-white rounded-xl w-full">Search</button>
+        </form>
+
+        <hr class="my-4">
+
+        <p class="font-semibold text-lg mb-2">Categories</p>
+
+        <ul>
+            <li {% if not category_id %}class="font-semibold"{% endif %}>
+                <a href="{% url 'item:items' %}" class="text-sm">All categories</a>
+            </li>
+
+            {% for category in categories %}
+                <li {% if category.id == category_id %}class="font-semibold"{% endif %}>
+                    <a href="{% url 'item:items' %}?category={{ category.id }}" class="text-sm">{{ category.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="col-span-4">
+        <div class="grid grid-cols-3 gap-4">
+            {% for item in items %}
+                <div class="bg-white rounded-xl shadow-md overflow-hidden flex flex-col">
+                    <a href="{% url 'item:detail' item.id %}" class="block h-full">  
+                        <div class="w-full h-48 flex items-center justify-center bg-gray-100">
+                            <img src="{{ item.image.url }}" class="max-w-full max-h-full object-contain" alt="{{ item.name }}">
+                        </div>
+
+                        <div class="p-4 flex-grow">
+                            <h2 class="text-xl font-semibold mb-2 truncate">{{ item.name }}</h2>
+                            <p class="text-gray-500">Price: {{ item.price }}</p>
+                        </div>
+                    </a>
+                </div>
+            {% empty %}
+                <div class="col-span-3">
+                    <p>No items found.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

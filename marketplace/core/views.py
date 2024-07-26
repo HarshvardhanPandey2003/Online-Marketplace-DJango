@@ -8,7 +8,6 @@ from django.shortcuts import render, get_object_or_404
 from item.models import Category, Item
 from django.db.models import Count
 
-
 def index(request):
     categories = Category.objects.annotate(item_count=Count('items'))
     
