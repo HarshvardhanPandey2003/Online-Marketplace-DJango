@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'core',
     'item',
     'dashboard',
+    'conservation'
 ]
 
 MIDDLEWARE = [

@@ -6,6 +6,8 @@
 <div class="pb-6 grid grid-cols-5 gap-4 bg-gray-100">
     <div class="col-span-1 p-4 bg-white rounded-xl">
         <form method="get" action="{% url 'item:items' %}">
+    <!-- This is how a structure of a form -->
+    <!--When submitted, this "Form" will send a GET request to the 'items' URL with the query parameter, like: /items?query=search_term -->
             <input name="query" class="w-full py-2 px-4 border rounded-xl text-sm" type="text" value="{{ query }}" placeholder="Find a bike, a chair or car...">
             <button class="mt-2 py-2 px-4 text-sm bg-teal-500 text-white rounded-xl w-full">Search</button>
         </form>
@@ -16,6 +18,7 @@
 
         <ul>
             <li {% if not category_id %}class="font-semibold"{% endif %}>
+        
                 <a href="{% url 'item:items' %}" class="text-sm">All categories</a>
             </li>
 
@@ -26,7 +29,7 @@
             {% endfor %}
         </ul>
     </div>
-
+    
     <div class="col-span-4">
         <div class="grid grid-cols-3 gap-4">
             {% for item in items %}
