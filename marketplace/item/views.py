@@ -80,4 +80,3 @@ def delete(request, pk):
 
     return redirect('dashboard:index')
 
-

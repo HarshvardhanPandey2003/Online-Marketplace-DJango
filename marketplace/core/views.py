@@ -10,7 +10,8 @@ from django.db.models import Count
 
 def index(request):
     categories = Category.objects.annotate(item_count=Count('items'))
-    
+    # So '<a href="{% url 'core:index' %}?category={{ category.id }}">' this send a request with category_id
+    # and we take that as an input and store only those category item in the item variables  
     category_id = request.GET.get('category')
     if category_id:
         category = get_object_or_404(Category, id=category_id)
@@ -42,7 +43,6 @@ def signup(request):
 
         if form.is_valid():
             form.save()
-
             return redirect('/login/')
     else:
         form = SignupForm()
